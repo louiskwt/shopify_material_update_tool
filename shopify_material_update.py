@@ -4,9 +4,9 @@ import re, csv
 def update_product_material_description(product_lst):
     for p in product_lst:
         p['Old Description'] = p['Body HTML']
-        match = re.search(r'<strong>Material</strong>(.*?)<', p['Body HTML'])
+        match = re.search(r'<p><strong>Material</strong></p>(.*?)<', p['Body HTML'])
         if match:
-            p['Body HTML'] = p['Body HTML'][:match.end()-1] + '<br><br>' + p['target_tags'] + p['Body HTML'][match.end()-1:]
+            p['Body HTML'] = p['Body HTML'][:match.end()-1] + '<p>' + p['target_tags'] + '</p>' + p['Body HTML'][match.end()-1:]
         keys_to_remove = ['target_tags', 'Handle', 'Status', 'Published', 'Published At', 'Tags']
         [p.pop(key) for key in keys_to_remove]
     return product_lst
